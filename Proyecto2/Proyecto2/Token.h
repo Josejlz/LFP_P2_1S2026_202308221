@@ -2,12 +2,13 @@
 #include <string>
 
 
-enum class TokenType {
+enum class TokenTypes {
 	RESERVADA_MAIN,
 	RESERVADA_SUB,
 	RESERVADA_ELEMENTO,
 	RESERVADA_ATRIBUTO,
 	NIVEL_PRIORIDAD,
+	ATRIBUTO,
 	LIT_FECHA,
 	LIT_HORA,
 	LIT_NUMERO,
@@ -21,18 +22,20 @@ enum class TokenType {
 	DOS_PUNTOS,
 	PUNTO,
 	PUNTO_Y_COMA,
+	COMA,
+	COMILLA
 
 };
 
 class Token
 {
 public:
-	TokenType type;
+	TokenTypes type;
 	std::string lexema;
 	int line;
 	int column;
 
-	Token(TokenType type, std::string lexema, int line, int column);
+	Token(TokenTypes type, std::string lexema, int line, int column);
 
 	std::string typeToString() const;
 

@@ -7,6 +7,11 @@
 #include <fstream>
 #include <sstream>
 
+void MainFrame::setLexicalAnalyzer(LexicalAnalyzer* analyzer) {
+	lexicalAnalyzer = analyzer;
+}
+
+
 wxString filePath = "";
 
 enum BTN_ID {
@@ -91,6 +96,7 @@ void MainFrame::OnButtonLoadClicked(wxCommandEvent &evt) {
 
 	textArea->SetValue("CONTENIDO DEL ARCHIVO===================== \n\n");
 	textArea->AppendText(wxString(buffer.str().c_str(), wxConvUTF8));
+	lexicalAnalyzer->setFileContent(wxString(buffer.str().c_str(), wxConvUTF8).ToStdString());
 
 };
 
@@ -98,6 +104,30 @@ void MainFrame::OnButtonGenReportesClicked(wxCommandEvent &evt) {
 };
 
 void MainFrame::OnButtonAnalyzeClicked(wxCommandEvent& evt) {
+	if (lexicalAnalyzer == nullptr) {
+		wxLogMessage("El analizador léxico no ha sido configurado.");
+		return;
+	}
+	if (filePath.IsEmpty()) {
+		wxLogMessage("No se ha cargado ningún archivo para analizar.");
+		return;
+	}
+	else {
+			lexicalAnalyzer->NextToken();
+			std::vector<Token> tokens = lexicalAnalyzer->getTokens();
+			textArea->AppendText("\n\nTOKENS IDENTIFICADOS===================== \n\n");
+
+
+			for (const auto& token : tokens) {
+				textArea->AppendText(wxString::Format(
+					wxString::FromUTF8("Tipo: %s, Lexema: %s, Línea: %d, Columna: %d\n"),
+					token.typeToString(), token.lexema, token.line, token.column));
+			}
+
+		
+
+		
+	}
 };
 
 

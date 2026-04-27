@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="ErrorManager.h" />
+    <ClInclude Include="ErrorToken.h" />
     <ClInclude Include="LexicalAnalyzer.h" />
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="ReportGenerator.h" />
@@ -146,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="ErrorManager.cpp" />
+    <ClCompile Include="ErrorToken.cpp" />
     <ClCompile Include="LexicalAnalyzer.cpp" />
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="ReportGenerator.cpp" />

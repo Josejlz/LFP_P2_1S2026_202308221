@@ -1,6 +1,6 @@
 #include "Token.h"
 
-Token::Token(TokenType type, std::string lexema, int line, int column) {
+Token::Token(TokenTypes type, std::string lexema, int line, int column) {
 	this->type = type;
 	this->lexema = lexema;
 	this->line = line;
@@ -9,42 +9,46 @@ Token::Token(TokenType type, std::string lexema, int line, int column) {
 
 std::string Token::typeToString() const {
 	switch (type) {
-	case TokenType::RESERVADA_MAIN:
+	case TokenTypes::RESERVADA_MAIN:
 		return "RESERVADA_MAIN";
-	case TokenType::RESERVADA_SUB:
+	case TokenTypes::RESERVADA_SUB:
 		return "RESERVADA_SUB";
-	case TokenType::RESERVADA_ELEMENTO:
+	case TokenTypes::RESERVADA_ELEMENTO:
 		return "RESERVADA_ELEMENTO";
-	case TokenType::RESERVADA_ATRIBUTO:
+	case TokenTypes::RESERVADA_ATRIBUTO:
 		return "RESERVADA_ATRIBUTO";
-	case TokenType::NIVEL_PRIORIDAD:
+	case TokenTypes::NIVEL_PRIORIDAD:
 		return "NIVEL_PRIORIDAD";
-	case TokenType::LIT_FECHA:
+	case TokenTypes::LIT_FECHA:
 		return "LIT_FECHA";
-	case TokenType::LIT_HORA:
+	case TokenTypes::LIT_HORA:
 		return "LIT_HORA";
-	case TokenType::LIT_NUMERO:
+	case TokenTypes::LIT_NUMERO:
 		return "LIT_NUMERO";
-	case TokenType::LIT_CADENA:
+	case TokenTypes::LIT_CADENA:
 		return "LIT_CADENA";
-	case TokenType::LLAVE_ABRE:
+	case TokenTypes::LLAVE_ABRE:
 		return "LLAVE_ABRE";
-	case TokenType::LLAVE_CIERRA:
+	case TokenTypes::LLAVE_CIERRA:
 		return "LLAVE_CIERRA";
-	case TokenType::CORCHETE_ABRE:
+	case TokenTypes::CORCHETE_ABRE:
 		return "CORCHETE_ABRE";
-	case TokenType::CORCHETE_CIERRA:
+	case TokenTypes::CORCHETE_CIERRA:
 		return "CORCHETE_CIERRA";
-	case TokenType::PARENTESIS_ABRE:
+	case TokenTypes::PARENTESIS_ABRE:
 		return "PARENTESIS_ABRE";
-	case TokenType::PARENTESIS_CIERRA:
+	case TokenTypes::PARENTESIS_CIERRA:
 		return "PARENTESIS_CIERRA";
-	case TokenType::DOS_PUNTOS:
+	case TokenTypes::DOS_PUNTOS:
 		return "DOS_PUNTOS";
-	case TokenType::PUNTO:
+	case TokenTypes::PUNTO:
 		return "PUNTO";
-	case TokenType::PUNTO_Y_COMA:
+	case TokenTypes::PUNTO_Y_COMA:
 		return "PUNTO_Y_COMA";
+	case TokenTypes::COMA:
+		return "COMA";
+	case TokenTypes::COMILLA: 
+			return "COMILLA";
 	default:
 		return "UNKNOWN";
 	}
