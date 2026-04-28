@@ -11,6 +11,9 @@ class LexicalAnalyzer
 public:
 	LexicalAnalyzer();
 	void setFileContent(const std::string& content);
+	void setErrorManager(ErrorManager* errMng);
+	ErrorManager* getErrorManager();
+
 	std::vector<Token> getTokens();
 	void NextToken();
 	char peek();
@@ -26,6 +29,7 @@ public:
 private:
 	std::string filecontent;
 	std::vector<Token> tokens;
+	ErrorManager* errorManager = nullptr;
 
 
 };

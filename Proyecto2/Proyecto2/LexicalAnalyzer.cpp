@@ -3,6 +3,8 @@
 #include <cctype>
 #include <string>
 #include <stdexcept>
+#include "ErrorManager.h"
+#include "ErrorToken.h"
 
 bool isDelimiter(const char& c) {
 	return (c == '(' || c == ')' || c == '{' || c == '}' || c == '[' || c == ']' || c == ':'||c == ',' || c == ';');
@@ -48,6 +50,14 @@ static TokenTypes clasificarPalabras(const std::string& p) {
 	else {
 		return TokenTypes::ATRIBUTO;
 	}
+}
+
+void LexicalAnalyzer::setErrorManager(ErrorManager* errMng) {	
+	errorManager = errMng;
+}
+
+ErrorManager* LexicalAnalyzer::getErrorManager() {
+	return errorManager;
 }
 
 void LexicalAnalyzer::setFileContent(const std::string& content) {
@@ -164,7 +174,7 @@ void LexicalAnalyzer::NextToken() {
 			}
 
 			lexeme += advance();
-			//error caracter no reconocido
+			errorManager->addError(lexeme, line, column, TipoError::UNRECOGNIZED_CHAR, Gravedad::REGULAR, Tipo::LEXICO);
 			lexeme = "";
 			break;
 
@@ -197,6 +207,7 @@ void LexicalAnalyzer::NextToken() {
 			}
 			else if (c == '\0'|| c == '\n'){
 				//para errores
+				errorManager->addError(lexeme, line, column, TipoError::UNCLOSED_STRING, Gravedad::CRITICO, Tipo::LEXICO);
 				lexeme = "";
 				state = 0;
 				advance();
@@ -240,14 +251,14 @@ void LexicalAnalyzer::NextToken() {
 			if (isdigit(c)) {
 				lexeme += advance();
 				break;
-			}
-			else if(c== '-'&&lexeme.size()>=7) {
+			} else if (c == '-' && lexeme.size() <= 7) {
 				lexeme += advance();
 				state = 11;
 				break;
 			}
 			else {
 				//error de fecha
+				errorManager->addError(lexeme, line, column, TipoError::INVALID_DATE, Gravedad::CRITICO, Tipo::LEXICO);
 				lexeme = "";
 				state = 0;
 				advance();
@@ -258,27 +269,56 @@ void LexicalAnalyzer::NextToken() {
 
 			if (isdigit(c)) {
 				lexeme += advance();
+				if (isdigit(peek())) {
+					lexeme += advance();
+					tokens.push_back(Token(TokenTypes::LIT_FECHA, lexeme, line, column));
+					lexeme = "";
+					state = 0;
+					break;
+				}
+				else {
+					tokens.push_back(Token(TokenTypes::LIT_FECHA, lexeme, line, column));
+					lexeme = "";
+					state = 0;
+					break;
+				}
 				break;
 			}
 			else {
-				tokens.push_back(Token(TokenTypes::LIT_FECHA, lexeme, line, column));
+				errorManager->addError(lexeme, line, column, TipoError::INVALID_DATE, Gravedad::CRITICO, Tipo::LEXICO);
 				lexeme = "";
 				state = 0;
 				break;
 			}
 			break;
+			
 		case 15:
 			if (isdigit(c)) {
 				lexeme += advance();
+
+				if (isdigit(peek())) {
+					lexeme += advance();
+					tokens.push_back(Token(TokenTypes::LIT_HORA, lexeme, line, column));
+					lexeme = "";
+					state = 0;
+					break;
+				}
+				else {
+					tokens.push_back(Token(TokenTypes::LIT_HORA, lexeme, line, column));
+					lexeme = "";
+					state = 0;
+					break;
+				}
+
 				break;
 			}
 			else {
-				tokens.push_back(Token(TokenTypes::LIT_HORA, lexeme, line, column));
+				errorManager->addError(lexeme, line, column, TipoError::INVALID_TIME, Gravedad::CRITICO, Tipo::LEXICO);
 				lexeme = "";
-				advance();
 				state = 0;
 				break;
 			}
+			
 			break;
 		
 		} 

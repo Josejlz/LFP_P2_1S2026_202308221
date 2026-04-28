@@ -23,7 +23,8 @@ enum class TokenTypes {
 	PUNTO,
 	PUNTO_Y_COMA,
 	COMA,
-	COMILLA
+	COMILLA,
+	UNDEFINED
 
 };
 

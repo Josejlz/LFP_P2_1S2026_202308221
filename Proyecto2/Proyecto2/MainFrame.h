@@ -29,5 +29,6 @@ public:
 	MainFrame(const wxString& title);
 	void setImage(const wxString& imagePath);
 	void setLexicalAnalyzer(LexicalAnalyzer* analyzer);
+	LexicalAnalyzer* getLexicalAnalyzer();
 };
 

@@ -3,8 +3,8 @@
 #include <vector>
 #include "ErrorToken.h"
 
-void ErrorManager::addError(std::string, int l, int c, TipoError tE, Gravedad g, Tipo t) {
-
+void ErrorManager::addError(std::string lex, int l, int c, TipoError tE, Gravedad g, Tipo t) {
+	errorList.push_back(ErrorToken(lex, l, c, tE, g, t));
 }
 
 void ErrorManager::limpiarErrores() {

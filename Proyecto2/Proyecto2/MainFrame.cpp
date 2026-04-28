@@ -6,9 +6,15 @@
 #include <wx/log.h>
 #include <fstream>
 #include <sstream>
+#include "LexicalAnalyzer.h"
+#include "ErrorManager.h"
 
 void MainFrame::setLexicalAnalyzer(LexicalAnalyzer* analyzer) {
 	lexicalAnalyzer = analyzer;
+}
+
+LexicalAnalyzer* MainFrame::getLexicalAnalyzer() {
+	return lexicalAnalyzer;
 }
 
 
@@ -94,7 +100,7 @@ void MainFrame::OnButtonLoadClicked(wxCommandEvent &evt) {
 
 	wxString fileContent(buffer.str());
 
-	textArea->SetValue("CONTENIDO DEL ARCHIVO===================== \n\n");
+	textArea->SetValue("=====================CONTENIDO DEL ARCHIVO===================== \n\n");
 	textArea->AppendText(wxString(buffer.str().c_str(), wxConvUTF8));
 	lexicalAnalyzer->setFileContent(wxString(buffer.str().c_str(), wxConvUTF8).ToStdString());
 
@@ -115,13 +121,22 @@ void MainFrame::OnButtonAnalyzeClicked(wxCommandEvent& evt) {
 	else {
 			lexicalAnalyzer->NextToken();
 			std::vector<Token> tokens = lexicalAnalyzer->getTokens();
-			textArea->AppendText("\n\nTOKENS IDENTIFICADOS===================== \n\n");
+			textArea->AppendText("\n\n=====================TOKENS IDENTIFICADOS===================== \n\n");
 
 
 			for (const auto& token : tokens) {
 				textArea->AppendText(wxString::Format(
 					wxString::FromUTF8("Tipo: %s, Lexema: %s, Línea: %d, Columna: %d\n"),
 					token.typeToString(), token.lexema, token.line, token.column));
+			}
+
+			std::vector<ErrorToken> errors = lexicalAnalyzer->getErrorManager()->getErrorList();
+			textArea->AppendText("\n\=====================ERRORES IDENTIFICADOS===================== \n\n");
+
+			for (const auto& error : errors) {
+				int i = 1;
+				textArea->AppendText(wxString::Format(wxString::FromUTF8("No.: %d, Lexema: %s, Línea: %d, Columna: %d, Gravedad: %s, TipoError: %s, Tipo: %s\n"), 
+					i++, error.lexeme, error.line, error.column, error.toStringGravedad(), error.toStringTipoError(), error.toStringTipoErrorSintLex()));
 			}
 
 		
