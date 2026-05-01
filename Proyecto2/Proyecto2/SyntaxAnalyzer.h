@@ -2,6 +2,14 @@
 #include <vector>
 #include "Token.h"
 #include "ErrorManager.h"
+#include <stdexcept>
+
+class SyntaxError : public std::runtime_error {
+public:
+	SyntaxError(const std::string& msg) : std::runtime_error(msg) {
+
+	}
+};
 
 class SyntaxAnalyzer
 {

@@ -8,6 +8,7 @@
 #include <sstream>
 #include "LexicalAnalyzer.h"
 #include "ErrorManager.h"
+#include "ReportGenerator.h"
 
 void MainFrame::setLexicalAnalyzer(LexicalAnalyzer* analyzer) {
 	lexicalAnalyzer = analyzer;
@@ -66,8 +67,11 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title) 
 
 	wxInitAllImageHandlers();
 	image = nullptr;
+	reportGenerator = new ReportGenerator();
 
 };
+
+//carga de files
 
 void MainFrame::OnButtonLoadClicked(wxCommandEvent &evt) {
 	
@@ -104,10 +108,13 @@ void MainFrame::OnButtonLoadClicked(wxCommandEvent &evt) {
 	textArea->AppendText(wxString(buffer.str().c_str(), wxConvUTF8));
 	lexicalAnalyzer->setFileContent(wxString(buffer.str().c_str(), wxConvUTF8).ToStdString());
 
+	sintaxisOK = false;
+
 };
 
-void MainFrame::OnButtonGenReportesClicked(wxCommandEvent &evt) {
-};
+//Analisis
+
+
 
 void MainFrame::OnButtonAnalyzeClicked(wxCommandEvent& evt) {
 	if (lexicalAnalyzer == nullptr) {
@@ -119,6 +126,9 @@ void MainFrame::OnButtonAnalyzeClicked(wxCommandEvent& evt) {
 		return;
 	}
 	else {
+			//lexico
+
+			lexicalAnalyzer->getErrorManager()->limpiarErrores();
 			lexicalAnalyzer->NextToken();
 			std::vector<Token> tokens = lexicalAnalyzer->getTokens();
 			textArea->AppendText("\n\n=====================TOKENS IDENTIFICADOS===================== \n\n");
@@ -130,17 +140,41 @@ void MainFrame::OnButtonAnalyzeClicked(wxCommandEvent& evt) {
 					token.typeToString(), token.lexema, token.line, token.column));
 			}
 
-			std::vector<ErrorToken> errors = lexicalAnalyzer->getErrorManager()->getErrorList();
-			textArea->AppendText("\n\=====================ERRORES IDENTIFICADOS===================== \n\n");
+			//sintactico
 
+			if (syntaxAnalyzer) delete syntaxAnalyzer;
+			syntaxAnalyzer = new SyntaxAnalyzer(tokens, lexicalAnalyzer->getErrorManager());
+			syntaxAnalyzer->parse();
+
+			//errores
+
+			std::vector<ErrorToken> errors = lexicalAnalyzer->getErrorManager()->getErrorList();
+			textArea->AppendText("\n\n=====================ERRORES IDENTIFICADOS===================== \n\n");
+			bool hayErrorSintactico = false;
+			int i = 1;
 			for (const auto& error : errors) {
-				int i = 1;
+
+				if (error.tipo == Tipo::SINTACTICO) {
+					hayErrorSintactico = true;
+				}
+
 				textArea->AppendText(wxString::Format(wxString::FromUTF8("No.: %d, Lexema: %s, Línea: %d, Columna: %d, Gravedad: %s, TipoError: %s, Tipo: %s\n"), 
 					i++, error.lexeme, error.line, error.column, error.toStringGravedad(), error.toStringTipoError(), error.toStringTipoErrorSintLex()));
 			}
 
+			if (errors.empty()) {
+				textArea->AppendText("Sin errores.\n");
+			}
 		
+			sintaxisOK = !hayErrorSintactico;
 
+			if (sintaxisOK) {
+				textArea->AppendText("\nAnalisis sintactico: OK. Puede generar los reportes.\n");
+				reportGenerator->tokens = tokens;
+			}
+			else {
+				textArea->AppendText("\nAnalisis sintactico: FALLIDO. Corrija los errores antes de generar reportes.\n");
+			}
 		
 	}
 };
@@ -171,4 +205,31 @@ void MainFrame::setImage(const wxString& imagePath)
 	// para actuallizar el scroll
 	scrolledWindow->FitInside();
 	scrolledWindow->Layout();
+};
+
+
+void MainFrame::OnButtonGenReportesClicked(wxCommandEvent& evt) {
+
+	if (!sintaxisOK) {
+		wxLogMessage("No se pueden generar reportes: el archivo tiene errores sintacticos.");
+		return;
+	}
+
+	wxDirDialog dirDialog(this, "Seleccionar carpeta para guardar los reportes", "", wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
+
+	if (dirDialog.ShowModal()==wxID_CANCEL) {
+		return;
+	}
+
+	std::string outputDir = dirDialog.GetPath().ToStdString();
+
+	bool ok = reportGenerator->generateReports(outputDir);
+
+	if (ok) {
+		wxLogMessage("Reportes generados exitosamente en:\n" + outputDir);
+	}
+	else {
+		wxLogMessage("Ocurrio un error al generar los reportes.");
+	}
+
 };

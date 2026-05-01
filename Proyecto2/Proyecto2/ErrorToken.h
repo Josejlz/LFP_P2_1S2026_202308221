@@ -9,6 +9,7 @@ enum class TipoError {
 	INVALID_TIME,
 	UNCLOSED_KEY,
 	UNCLOSED_BRACKET,
+	UNEXPECTED_TOKEN
 };
 
 enum class Gravedad {

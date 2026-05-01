@@ -3,10 +3,13 @@
 #include "Token.h"
 #include <vector>
 #include <string>
+#include <map>
 
-struct Tablero {
+struct Tarea {
 	std::string nombre;
-	std::vector<Columna> columnas;
+	std::string prioridad;
+	std::string responsable;
+	std::string fechaLimite;
 };
 
 struct Columna {
@@ -14,15 +17,17 @@ struct Columna {
 	std::vector<Tarea> tareas;
 };
 
-struct Tarea {
+struct Tablero {
 	std::string nombre;
-	std::string prioridad;
-	Persona responsable;
-	std::string fechaLimite;
+	std::vector<Columna> columnas;
 };
 
-struct Persona {
-	std::vector<Tarea> tareas;
+struct PersonaRes {
+	std::string nombre;
+	int totalTareas = 0;
+	int tareasAlta = 0;
+	int tareasMedia = 0;
+	int tareasBaja = 0;
 };
 
 class ReportGenerator
@@ -31,19 +36,27 @@ public:
 
 	std::vector<Token> tokens;
 	std::vector<ErrorToken> errores;
-	std::vector<Tarea> tareas;
-	std::vector<Tablero> tableros;
-	std::vector<Persona> personas;
 
-	void generateReports();
+	bool generateReports(const std::string& outputDir);
+
+	
+
+private:
+	Tablero tablero;
+	std::vector<Tarea> tareas;
+	std::vector<PersonaRes> personas;
+
 	void parsearTokens();
 	void cruzarDatos();
 	void genReporte1(const std::string& outputPath);
 	void genReporte2(const std::string& outputPath);
 
-private:
-
-
+	int pos = 0;
+	bool isAtEnd() const;
+	Token peekToken() const;
+	Token consumeToken();
+	bool matchToken(TokenTypes type) const;
+	Token expectToken(TokenTypes type);
 
 };
 

@@ -28,6 +28,7 @@ std::string ErrorToken::toStringTipoError() const {
 		case TipoError::INVALID_DATE: return "INVALID_DATE";
 		case TipoError::UNCLOSED_STRING: return "UNCLOSED_STRING";
 		case TipoError::UNRECOGNIZED_CHAR: return "UNRECOGNIZED_CHAR";
+		case TipoError::UNEXPECTED_TOKEN:  return "UNEXPECTED_TOKEN";
 		default: return "UNDEFINED";
 	}
 }

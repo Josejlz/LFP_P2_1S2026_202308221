@@ -3,6 +3,8 @@
 #include <string>
 #include <wx/string.h>
 #include "LexicalAnalyzer.h"
+#include "SyntaxAnalyzer.h"
+#include "ReportGenerator.h"
 
 
 class LexicalAnalyzer;
@@ -17,6 +19,10 @@ private:
 	wxStaticBitmap* image = nullptr;
 	wxScrolledWindow* scrolledWindow = nullptr;
 	LexicalAnalyzer* lexicalAnalyzer = nullptr;
+	SyntaxAnalyzer* syntaxAnalyzer = nullptr;
+	ReportGenerator* reportGenerator = nullptr;
+
+	bool sintaxisOK = false;
 
 	void OnButtonLoadClicked(wxCommandEvent& evt);
 	void OnButtonGenReportesClicked(wxCommandEvent& evt);
