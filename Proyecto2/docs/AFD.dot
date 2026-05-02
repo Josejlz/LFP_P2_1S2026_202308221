@@ -1,0 +1,53 @@
+digraph AFD_Scanner {
+    // Configuración estética siguiendo el modelo de la Unidad 2
+    rankdir=LR;
+    node [fontname="Arial", shape=circle, fixedsize=true, width=0.9];
+    edge [fontname="Arial", fontsize=10];
+
+    // Nodo inicial (flecha sin origen) 
+    node [shape=point]; start;
+    
+    // Definición de estados de aceptación con doble círculo 
+    node [shape=doublecircle]; S1 S5 S11 S15 S3_Acept;
+    
+    // Regresar a círculo simple para los demás
+    node [shape=circle]; S0 S3 S10;
+
+    // --- Transiciones ---
+    
+    start -> S0;
+
+    // Estado S0: Inicial
+    S0 -> S0 [label="espacio, \\n, \\t\ndelimitadores"];
+    S0 -> S1 [label="letra, _"];
+    S0 -> S5 [label="dígito"];
+    S0 -> S3 [label="\""];
+
+    // Estado S1: Identificadores y Reservadas
+    S1 -> S1 [label="letra, dígito, _"];
+    // (La salida de S1 a S0 por delimitador se asume al aceptar el lexema)
+
+    // Estado S3: Cadenas (Strings)
+    S3 -> S3 [label="cualquier char\n(excepto \", \\n)"];
+    S3 -> S3_Acept [label="\""];
+
+    // Estado S5: Números / Inicio de Fecha u Hora
+    S5 -> S5 [label="dígito"];
+    S5 -> S10 [label="'-'"];
+    S5 -> S15 [label="':'"];
+
+    // Estados S10 y S11: Lógica de Fechas (AAAA-MM-DD)
+    S10 -> S10 [label="dígito"];
+    S10 -> S11 [label="'-'"];
+    S11 -> S11 [label="dígito"];
+
+    // Estado S15: Lógica de Horas (HH:MM)
+    S15 -> S15 [label="dígito"];
+
+    // Notas de clasificación (Labels informales para claridad)
+    S1 [xlabel="ID"];
+    S5 [xlabel="NUM"];
+    S3_Acept [xlabel="CADENA"];
+    S11 [xlabel="FECHA"];
+    S15 [xlabel="HORA"];
+}

@@ -60,17 +60,11 @@ Token SyntaxAnalyzer::expectLexeme(const std::string& lexeme) {
 //llamadas desde afuera
 
 void SyntaxAnalyzer::parse() {
-
 	try{
 		parsePrograma();
 	}
 	catch (const SyntaxError&) {
-
 	}
-
-	
-
-	
 };
 
 //reglas gramaticales
