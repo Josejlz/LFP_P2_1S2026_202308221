@@ -1,0 +1,7 @@
+TABLERO "Proyecto con Errores Lexicos" {
+    COLUMNA "Tareas" {
+        tarea: "Tarea con simbolo raro" [prioridad: ALTA, responsable: "Juan", fecha_limite: 2026-13],
+        tarea: "Otra tarea" [prioridad: MEDIA, responsable: "Ana@", fecha_limite: 2026-05-10],
+        tarea: "Cadena sin cerrar [prioridad: BAJA, responsable: "Luis", fecha_limite: 2026-05-15],
+    };
+};

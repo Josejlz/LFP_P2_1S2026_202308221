@@ -23,6 +23,7 @@ private:
 	ReportGenerator* reportGenerator = nullptr;
 
 	bool sintaxisOK = false;
+	bool analized = false;
 
 	void OnButtonLoadClicked(wxCommandEvent& evt);
 	void OnButtonGenReportesClicked(wxCommandEvent& evt);

@@ -39,6 +39,7 @@ private:
 public:
 	SyntaxAnalyzer(std::vector<Token> t, ErrorManager* eM);
 	void parse();
+	std::vector<Token> getTokens();
 
 };
 

@@ -1,0 +1,7 @@
+TABLERO "Errores en Responsables" {
+    COLUMNA "Tareas" {
+        tarea: "Revisar codigo" [prioridad: ALTA, responsable: "Juan@Perez", fecha_limite: 2026-05-10],
+        tarea: "Subir cambios" [prioridad: MEDIA, responsable: "Ana#Lopez", fecha_limite: 2026-05-11],
+        tarea: "Hacer pruebas" [prioridad: BAJA, responsable: "Luis$Garcia", fecha_limite: 2026-05-12],
+    };
+};

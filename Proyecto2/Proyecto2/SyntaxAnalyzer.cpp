@@ -2,6 +2,10 @@
 #include <iostream>
 #include <stdexcept>
 
+std::vector<Token> SyntaxAnalyzer::getTokens() {
+	return tokens;
+}
+
 SyntaxAnalyzer::SyntaxAnalyzer(std::vector<Token> t, ErrorManager* eM) {
 	tokens = t;
 	pos = 0;

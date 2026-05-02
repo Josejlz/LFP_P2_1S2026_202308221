@@ -1,0 +1,7 @@
+TABLERO "Errores de Cadenas" {
+    COLUMNA "En Progreso" {
+        tarea: "Tarea con cadena ok" [prioridad: ALTA, responsable: "Carlos", fecha_limite: 2026-05-10],
+        tarea: "Nombre sin cerrar [prioridad: MEDIA, responsable: "Ana", fecha_limite: 2026-05-11],
+        tarea: "Otra tarea ok" [prioridad: BAJA, responsable: "Responsable sin cerrar, fecha_limite: 2026-05-12],
+    };
+};

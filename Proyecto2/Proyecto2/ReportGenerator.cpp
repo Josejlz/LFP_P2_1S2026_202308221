@@ -49,6 +49,7 @@ bool ReportGenerator::generateReports(const std::string& outputDir) {
 		cruzarDatos();
 		genReporte1(outputDir + "/reporte_tablero.html");;
 		genReporte2(outputDir + "/reporte_responsables.html");
+		genReporteTokens(outputDir + "/reporte_tokens.html");
 		return true;
 	}
 	catch(const std::exception& e){
@@ -255,9 +256,7 @@ void ReportGenerator::genReporte2(const std::string& outputPath) {
 	f << "  <tbody>\n";
 
 	for (const auto& p : personas) {
-		double pct = totalGlobal > 0
-			? (p.totalTareas * 100.0 / totalGlobal)
-			: 0.0;
+		double pct = totalGlobal > 0 ? (p.totalTareas * 100.0 / totalGlobal) : 0.0;
 
 		f << "    <tr>"
 			<< "<td>" << p.nombre << "</td>"
@@ -272,3 +271,64 @@ void ReportGenerator::genReporte2(const std::string& outputPath) {
 	f << "  </tbody>\n</table>\n";
 	f << htmlFooter();
 };
+
+//el errores y tokesn (el tres)
+
+void ReportGenerator::genReporteTokens(const std::string& outputPath) {
+	std::ofstream f(outputPath);
+	if (!f.is_open()) throw std::runtime_error("No se pudo crear " + outputPath);
+
+	f << htmlHeader("Reporte de Tokens y Errores");
+	f << "<h1>Reporte de Análisis</h1>\n";
+
+	// -para la tabla de tokens
+	f << "<h2>Tokens Identificados</h2>\n";
+	f << "<table>\n";
+	f << "  <thead><tr>"
+		<< "<th>#</th><th>Tipo</th><th>Lexema</th><th>Línea</th><th>Columna</th>"
+		<< "</tr></thead>\n";
+	f << "  <tbody>\n";
+
+	int i = 1;
+	for (const auto& t : tokens) {
+		f << "    <tr>"
+			<< "<td>" << i++ << "</td>"
+			<< "<td>" << t.typeToString() << "</td>"
+			<< "<td>" << t.lexema << "</td>"
+			<< "<td>" << t.line << "</td>"
+			<< "<td>" << t.column << "</td>"
+			<< "</tr>\n";
+	}
+
+	f << "  </tbody>\n</table>\n";
+
+	// para la tabla de errores
+	f << "<h2 style='margin-top:40px'>Errores Identificados</h2>\n";
+	f << "<table>\n";
+	f << "  <thead><tr>"
+		<< "<th>#</th><th>Tipo</th><th>Lexema</th>"
+		<< "<th>Línea</th><th>Columna</th><th>Error</th><th>Gravedad</th>"
+		<< "</tr></thead>\n";
+	f << "  <tbody>\n";
+
+	if (errores.empty()) {
+		f << "    <tr><td colspan='7' style='text-align:center'>Sin errores</td></tr>\n";
+	}
+	else {
+		int j = 1;
+		for (const auto& e : errores) {
+			f << "    <tr>"
+				<< "<td>" << j++ << "</td>"
+				<< "<td>" << e.toStringTipoErrorSintLex() << "</td>"
+				<< "<td>" << e.lexeme << "</td>"
+				<< "<td>" << e.line << "</td>"
+				<< "<td>" << e.column << "</td>"
+				<< "<td>" << e.toStringTipoError() << "</td>"
+				<< "<td>" << e.toStringGravedad() << "</td>"
+				<< "</tr>\n";
+		}
+	}
+
+	f << "  </tbody>\n</table>\n";
+	f << htmlFooter();
+}

@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Reporte por Responsable</title>
+  <title>Tablero: Proyecto LFP</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 32px; background: #f4f4f4; color: #222; }
     h1   { text-align: center; margin-bottom: 24px; }
@@ -29,14 +29,41 @@
   </style>
 </head>
 <body>
-<h1>Reporte por Responsable</h1>
-<table>
-  <thead><tr><th>Responsable</th><th>Tareas asignadas</th><th>Prioridad ALTA</th><th>Prioridad MEDIA</th><th>Prioridad BAJA</th><th>% del total</th></tr></thead>
-  <tbody>
-    <tr><td>Ana#Lopez</td><td>1</td><td>0</td><td>1</td><td>0</td><td>33.3%</td></tr>
-    <tr><td>Juan@Perez</td><td>1</td><td>1</td><td>0</td><td>0</td><td>33.3%</td></tr>
-    <tr><td>Luis$Garcia</td><td>1</td><td>0</td><td>0</td><td>1</td><td>33.3%</td></tr>
-  </tbody>
-</table>
+<h1>Proyecto LFP</h1>
+<div class="tablero">
+  <div class="columna">
+    <h2>Por Hacer</h2>
+    <div class="tarea ALTA">
+      <div class="nombre">Diseñar AFD</div>
+      <div class="meta">Responsable: Jorge<br>Fecha l&iacute;mite: 2026-05-01<br>Prioridad: ALTA</div>
+    </div>
+    <div class="tarea ALTA">
+      <div class="nombre">Implementar Lexer</div>
+      <div class="meta">Responsable: María<br>Fecha l&iacute;mite: 2026-05-08<br>Prioridad: ALTA</div>
+    </div>
+    <div class="tarea MEDIA">
+      <div class="nombre">Escribir casos de prueba</div>
+      <div class="meta">Responsable: Carlos<br>Fecha l&iacute;mite: 2026-05-10<br>Prioridad: MEDIA</div>
+    </div>
+  </div>
+  <div class="columna">
+    <h2>En Progreso</h2>
+    <div class="tarea MEDIA">
+      <div class="nombre">Diseñar GUI</div>
+      <div class="meta">Responsable: Ana<br>Fecha l&iacute;mite: 2026-05-05<br>Prioridad: MEDIA</div>
+    </div>
+  </div>
+  <div class="columna">
+    <h2>Completado</h2>
+    <div class="tarea BAJA">
+      <div class="nombre">Investigar Qt</div>
+      <div class="meta">Responsable: Pedro<br>Fecha l&iacute;mite: 2026-04-20<br>Prioridad: BAJA</div>
+    </div>
+    <div class="tarea BAJA">
+      <div class="nombre">Configurar GitHub</div>
+      <div class="meta">Responsable: Jorge<br>Fecha l&iacute;mite: 2026-04-18<br>Prioridad: BAJA</div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

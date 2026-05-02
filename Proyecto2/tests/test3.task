@@ -1,0 +1,12 @@
+TABLERO "Sprint Semanal" {
+    COLUMNA "Pendiente" {
+        tarea: "Revisar pull requests" [prioridad: ALTA, responsable: "Maria", fecha_limite: 2026-05-05],
+        tarea: "Actualizar documentacion" [prioridad: BAJA, responsable: "Maria", fecha_limite: 2026-05-06],
+        tarea: "Corregir bugs reportados" [prioridad: ALTA, responsable: "Maria", fecha_limite: 2026-05-07],
+    };
+    COLUMNA "En Revision" {
+    };
+    COLUMNA "Listo" {
+        tarea: "Reunion de planificacion" [prioridad: MEDIA, responsable: "Maria", fecha_limite: 2026-04-28],
+    };
+};

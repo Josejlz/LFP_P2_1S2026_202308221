@@ -9,6 +9,7 @@
 #include "LexicalAnalyzer.h"
 #include "ErrorManager.h"
 #include "ReportGenerator.h"
+#include <stdexcept>
 
 void MainFrame::setLexicalAnalyzer(LexicalAnalyzer* analyzer) {
 	lexicalAnalyzer = analyzer;
@@ -107,7 +108,7 @@ void MainFrame::OnButtonLoadClicked(wxCommandEvent &evt) {
 	textArea->SetValue("=====================CONTENIDO DEL ARCHIVO===================== \n\n");
 	textArea->AppendText(wxString(buffer.str().c_str(), wxConvUTF8));
 	lexicalAnalyzer->setFileContent(wxString(buffer.str().c_str(), wxConvUTF8).ToStdString());
-
+	analized = false;
 	sintaxisOK = false;
 
 };
@@ -127,7 +128,8 @@ void MainFrame::OnButtonAnalyzeClicked(wxCommandEvent& evt) {
 	}
 	else {
 			//lexico
-
+			
+		analized = true;
 			lexicalAnalyzer->getErrorManager()->limpiarErrores();
 			lexicalAnalyzer->NextToken();
 			std::vector<Token> tokens = lexicalAnalyzer->getTokens();
@@ -209,9 +211,40 @@ void MainFrame::setImage(const wxString& imagePath)
 
 
 void MainFrame::OnButtonGenReportesClicked(wxCommandEvent& evt) {
+	
+
 
 	if (!sintaxisOK) {
 		wxLogMessage("No se pueden generar reportes: el archivo tiene errores sintacticos.");
+
+		if (analized) {
+			wxLogMessage("Se generará un reporte con los Tokens.");
+
+			try {
+
+
+
+				wxDirDialog dirDialog(this, "Seleccionar carpeta para guardar los reportes", "", wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
+
+				if (dirDialog.ShowModal() == wxID_CANCEL) {
+					return;
+				}
+
+				std::string outputDir = dirDialog.GetPath().ToStdString();
+				reportGenerator->tokens = syntaxAnalyzer->getTokens();
+				reportGenerator->errores = lexicalAnalyzer->getErrorManager()->getErrorList();
+
+
+				reportGenerator->genReporteTokens(outputDir + "/reporte_tokens.html");
+
+				return;
+			}
+			catch (const std::exception& e) {
+				return;
+			}
+			
+		}
+
 		return;
 	}
 
@@ -222,7 +255,8 @@ void MainFrame::OnButtonGenReportesClicked(wxCommandEvent& evt) {
 	}
 
 	std::string outputDir = dirDialog.GetPath().ToStdString();
-
+	reportGenerator->tokens = syntaxAnalyzer->getTokens();
+	reportGenerator->errores = lexicalAnalyzer->getErrorManager()->getErrorList();
 	bool ok = reportGenerator->generateReports(outputDir);
 
 	if (ok) {

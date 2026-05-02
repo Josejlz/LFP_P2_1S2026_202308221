@@ -1,0 +1,12 @@
+TABLERO "Desarrollo TaskScript" {
+    COLUMNA "Backlog" {
+        tarea: "Investigar wxWidgets" [prioridad: BAJA, responsable: "Pedro", fecha_limite: 2026-04-15],
+        tarea: "Planificar arquitectura" [prioridad: ALTA, responsable: "Sofia", fecha_limite: 2026-04-18],
+        tarea: "Escribir casos de prueba" [prioridad: MEDIA, responsable: "Pedro", fecha_limite: 2026-05-20],
+        tarea: "Optimizar lexer" [prioridad: ALTA, responsable: "Sofia", fecha_limite: 2026-05-22],
+    };
+    COLUMNA "En Progreso" {
+        tarea: "Implementar parser" [prioridad: ALTA, responsable: "Sofia", fecha_limite: 2026-05-10],
+        tarea: "Generar reportes HTML" [prioridad: MEDIA, responsable: "Pedro", fecha_limite: 2026-05-11],
+    };
+};

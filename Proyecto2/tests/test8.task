@@ -1,0 +1,7 @@
+TABLERO "Errores de Fechas" {
+    COLUMNA "Pendientes" {
+        tarea: "Entrega parcial" [prioridad: ALTA, responsable: "Sofia", fecha_limite: 2026-05],
+        tarea: "Revision final" [prioridad: MEDIA, responsable: "Pedro", fecha_limite: 202605-10],
+        tarea: "Presentacion" [prioridad: BAJA, responsable: "Sofia", fecha_limite: 20-05-2026],
+    };
+};

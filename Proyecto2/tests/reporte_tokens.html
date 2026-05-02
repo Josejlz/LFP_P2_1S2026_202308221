@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reporte de Tokens y Errores</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 32px; background: #f4f4f4; color: #222; }
+    h1   { text-align: center; margin-bottom: 24px; }
+    /* --- Kanban --- */
+    .tablero { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .columna { background: #fff; border-radius: 8px; padding: 16px; min-width: 200px;
+               flex: 1; box-shadow: 0 2px 4px rgba(0,0,0,.1); }
+    .columna h2 { font-size: 1rem; margin-bottom: 12px; border-bottom: 2px solid #ddd;
+                  padding-bottom: 6px; }
+    .tarea { background: #f9f9f9; border: 1px solid #ddd; border-radius: 6px;
+             padding: 8px 10px; margin-bottom: 8px; font-size: .875rem; }
+    .tarea .nombre { font-weight: bold; margin-bottom: 4px; }
+    .tarea .meta   { color: #666; font-size: .8rem; }
+    .ALTA  { border-left: 4px solid #e74c3c; }
+    .MEDIA { border-left: 4px solid #f39c12; }
+    .BAJA  { border-left: 4px solid #2ecc71; }
+    /* --- Tabla responsables --- */
+    table { width: 100%; border-collapse: collapse; background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1); border-radius: 8px; overflow: hidden; }
+    th { background: #3498db; color: #fff; padding: 10px 14px; text-align: left; }
+    td { padding: 9px 14px; border-bottom: 1px solid #eee; }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: #f9f9f9; }
+  </style>
+</head>
+<body>
+<h1>Reporte de Análisis</h1>
+<h2>Tokens Identificados</h2>
+<table>
+  <thead><tr><th>#</th><th>Tipo</th><th>Lexema</th><th>Línea</th><th>Columna</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>RESERVADA_MAIN</td><td>TABLERO</td><td>1</td><td>8</td></tr>
+    <tr><td>2</td><td>LIT_CADENA</td><td>Multiples Errores Lexicos</td><td>1</td><td>36</td></tr>
+    <tr><td>3</td><td>LLAVE_ABRE</td><td>{</td><td>1</td><td>38</td></tr>
+    <tr><td>4</td><td>RESERVADA_SUB</td><td>COLUMNA</td><td>2</td><td>12</td></tr>
+    <tr><td>5</td><td>LIT_CADENA</td><td>Backlog</td><td>2</td><td>22</td></tr>
+    <tr><td>6</td><td>LLAVE_ABRE</td><td>{</td><td>2</td><td>24</td></tr>
+    <tr><td>7</td><td>RESERVADA_ELEMENTO</td><td>tarea</td><td>3</td><td>14</td></tr>
+    <tr><td>8</td><td>DOS_PUNTOS</td><td>:</td><td>3</td><td>15</td></tr>
+    <tr><td>9</td><td>LIT_CADENA</td><td>Tarea uno</td><td>3</td><td>27</td></tr>
+    <tr><td>10</td><td>CORCHETE_ABRE</td><td>[</td><td>3</td><td>29</td></tr>
+    <tr><td>11</td><td>RESERVADA_ATRIBUTO</td><td>prioridad</td><td>3</td><td>38</td></tr>
+    <tr><td>12</td><td>DOS_PUNTOS</td><td>:</td><td>3</td><td>39</td></tr>
+    <tr><td>13</td><td>NIVEL_PRIORIDAD</td><td>ALTA</td><td>3</td><td>44</td></tr>
+    <tr><td>14</td><td>COMA</td><td>,</td><td>3</td><td>45</td></tr>
+    <tr><td>15</td><td>RESERVADA_ATRIBUTO</td><td>responsable</td><td>3</td><td>57</td></tr>
+    <tr><td>16</td><td>DOS_PUNTOS</td><td>:</td><td>3</td><td>58</td></tr>
+    <tr><td>17</td><td>LIT_CADENA</td><td>Maria&Jose</td><td>3</td><td>71</td></tr>
+    <tr><td>18</td><td>COMA</td><td>,</td><td>3</td><td>72</td></tr>
+    <tr><td>19</td><td>RESERVADA_ATRIBUTO</td><td>fecha_limite</td><td>3</td><td>85</td></tr>
+    <tr><td>20</td><td>DOS_PUNTOS</td><td>:</td><td>3</td><td>86</td></tr>
+    <tr><td>21</td><td>LIT_FECHA</td><td>2026-05-10</td><td>3</td><td>97</td></tr>
+    <tr><td>22</td><td>CORCHETE_CIERRA</td><td>]</td><td>3</td><td>98</td></tr>
+    <tr><td>23</td><td>COMA</td><td>,</td><td>3</td><td>99</td></tr>
+    <tr><td>24</td><td>RESERVADA_ELEMENTO</td><td>tarea</td><td>4</td><td>14</td></tr>
+    <tr><td>25</td><td>DOS_PUNTOS</td><td>:</td><td>4</td><td>15</td></tr>
+    <tr><td>26</td><td>LIT_CADENA</td><td>Tarea dos</td><td>4</td><td>27</td></tr>
+    <tr><td>27</td><td>CORCHETE_ABRE</td><td>[</td><td>4</td><td>29</td></tr>
+    <tr><td>28</td><td>RESERVADA_ATRIBUTO</td><td>prioridad</td><td>4</td><td>38</td></tr>
+    <tr><td>29</td><td>DOS_PUNTOS</td><td>:</td><td>4</td><td>39</td></tr>
+    <tr><td>30</td><td>NIVEL_PRIORIDAD</td><td>MEDIA</td><td>4</td><td>45</td></tr>
+    <tr><td>31</td><td>COMA</td><td>,</td><td>4</td><td>46</td></tr>
+    <tr><td>32</td><td>RESERVADA_ATRIBUTO</td><td>responsable</td><td>4</td><td>58</td></tr>
+    <tr><td>33</td><td>DOS_PUNTOS</td><td>:</td><td>4</td><td>59</td></tr>
+    <tr><td>34</td><td>LIT_CADENA</td><td>Ana</td><td>4</td><td>65</td></tr>
+    <tr><td>35</td><td>COMA</td><td>,</td><td>4</td><td>66</td></tr>
+    <tr><td>36</td><td>RESERVADA_ATRIBUTO</td><td>fecha_limite</td><td>4</td><td>79</td></tr>
+    <tr><td>37</td><td>DOS_PUNTOS</td><td>:</td><td>4</td><td>80</td></tr>
+    <tr><td>38</td><td>LIT_NUMERO</td><td>2026/05/10</td><td>4</td><td>91</td></tr>
+    <tr><td>39</td><td>CORCHETE_CIERRA</td><td>]</td><td>4</td><td>92</td></tr>
+    <tr><td>40</td><td>COMA</td><td>,</td><td>4</td><td>93</td></tr>
+    <tr><td>41</td><td>RESERVADA_ELEMENTO</td><td>tarea</td><td>5</td><td>14</td></tr>
+    <tr><td>42</td><td>DOS_PUNTOS</td><td>:</td><td>5</td><td>15</td></tr>
+    <tr><td>43</td><td>LIT_CADENA</td><td>Tarea sin responsable cerrar [prioridad: BAJA, responsable: </td><td>5</td><td>78</td></tr>
+    <tr><td>44</td><td>UNKNOWN</td><td>Luis</td><td>5</td><td>82</td></tr>
+    <tr><td>45</td><td>LLAVE_CIERRA</td><td>}</td><td>6</td><td>6</td></tr>
+    <tr><td>46</td><td>PUNTO_Y_COMA</td><td>;</td><td>6</td><td>7</td></tr>
+    <tr><td>47</td><td>RESERVADA_SUB</td><td>COLUMNA</td><td>7</td><td>12</td></tr>
+    <tr><td>48</td><td>LIT_CADENA</td><td>Completado</td><td>7</td><td>25</td></tr>
+    <tr><td>49</td><td>LLAVE_ABRE</td><td>{</td><td>7</td><td>27</td></tr>
+    <tr><td>50</td><td>RESERVADA_ELEMENTO</td><td>tarea</td><td>8</td><td>14</td></tr>
+    <tr><td>51</td><td>DOS_PUNTOS</td><td>:</td><td>8</td><td>15</td></tr>
+    <tr><td>52</td><td>LIT_CADENA</td><td>Tarea limpia</td><td>8</td><td>30</td></tr>
+    <tr><td>53</td><td>CORCHETE_ABRE</td><td>[</td><td>8</td><td>32</td></tr>
+    <tr><td>54</td><td>RESERVADA_ATRIBUTO</td><td>prioridad</td><td>8</td><td>41</td></tr>
+    <tr><td>55</td><td>DOS_PUNTOS</td><td>:</td><td>8</td><td>42</td></tr>
+    <tr><td>56</td><td>NIVEL_PRIORIDAD</td><td>BAJA</td><td>8</td><td>47</td></tr>
+    <tr><td>57</td><td>COMA</td><td>,</td><td>8</td><td>48</td></tr>
+    <tr><td>58</td><td>RESERVADA_ATRIBUTO</td><td>responsable</td><td>8</td><td>60</td></tr>
+    <tr><td>59</td><td>DOS_PUNTOS</td><td>:</td><td>8</td><td>61</td></tr>
+    <tr><td>60</td><td>LIT_CADENA</td><td>Carlos</td><td>8</td><td>70</td></tr>
+    <tr><td>61</td><td>COMA</td><td>,</td><td>8</td><td>71</td></tr>
+    <tr><td>62</td><td>RESERVADA_ATRIBUTO</td><td>fecha_limite</td><td>8</td><td>84</td></tr>
+    <tr><td>63</td><td>DOS_PUNTOS</td><td>:</td><td>8</td><td>85</td></tr>
+    <tr><td>64</td><td>LIT_FECHA</td><td>2026-04-20</td><td>8</td><td>96</td></tr>
+    <tr><td>65</td><td>CORCHETE_CIERRA</td><td>]</td><td>8</td><td>97</td></tr>
+    <tr><td>66</td><td>COMA</td><td>,</td><td>8</td><td>98</td></tr>
+    <tr><td>67</td><td>LLAVE_CIERRA</td><td>}</td><td>9</td><td>6</td></tr>
+    <tr><td>68</td><td>PUNTO_Y_COMA</td><td>;</td><td>9</td><td>7</td></tr>
+    <tr><td>69</td><td>LLAVE_CIERRA</td><td>}</td><td>10</td><td>2</td></tr>
+    <tr><td>70</td><td>PUNTO_Y_COMA</td><td>;</td><td>10</td><td>3</td></tr>
+  </tbody>
+</table>
+<h2 style='margin-top:40px'>Errores Identificados</h2>
+<table>
+  <thead><tr><th>#</th><th>Tipo</th><th>Lexema</th><th>Línea</th><th>Columna</th><th>Error</th><th>Gravedad</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>LEXICO</td><td>, fecha_limite: 2026-05-15],</td><td>5</td><td>111</td><td>UNCLOSED_STRING</td><td>CRITICO</td></tr>
+    <tr><td>2</td><td>SINTACTICO</td><td>2026/05/10</td><td>4</td><td>91</td><td>UNEXPECTED_TOKEN</td><td>CRITICO</td></tr>
+  </tbody>
+</table>
+</body>
+</html>

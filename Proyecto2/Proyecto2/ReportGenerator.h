@@ -36,7 +36,7 @@ public:
 
 	std::vector<Token> tokens;
 	std::vector<ErrorToken> errores;
-
+	void genReporteTokens(const std::string& outputPath);
 	bool generateReports(const std::string& outputDir);
 
 	

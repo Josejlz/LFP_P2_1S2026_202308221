@@ -1,0 +1,9 @@
+TABLERO "Proyecto con Errores Sintacticos" {
+    COLUMNA "Primera Columna" {
+        tarea: "Falta corchete de cierre" [prioridad: ALTA, responsable: "Carlos", fecha_limite: 2026-05-10
+        tarea: "Atributo incorrecto" [prioridad: ALTA, encargado: "Ana", fecha_limite: 2026-05-12],
+    };
+    "Columna sin palabra clave" {
+        tarea: "Tarea normal" [prioridad: BAJA, responsable: "Luis", fecha_limite: 2026-05-08],
+    };
+};
